@@ -1,32 +1,26 @@
 import React, { useState } from 'react';
-import './App.css';
 
-function App() {
+export default function App() { // 이름을 App으로 통일했습니다!
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  // 디자인 테마 색상
   const colors = {
-    primary: '#e84393',
+    primary: '#ff6b81', 
     background: '#fff0f6',
-    lv1: '#00b894',
-    lv2: '#0984e3',
-    lv3: '#d63031',
+    accent: '#ffa502', 
+    text: '#2f3542'
   };
 
-  const handleLevelSelect = (level) => {
+  const handleJoin = () => {
     if (!email.includes('@')) {
-      alert('Miss Rabbit이 메일을 보낼 수 있게 이메일 주소를 정확히 적어주세요! 🐰');
+      alert('어머니, 혜택을 받으실 정확한 이메일 주소를 입력해주세요! 🐰');
       return;
     }
-    
     setIsLoading(true);
-    // TODO: GAS 서버 연동 로직
-    console.log(`Email: ${email}, Selected Level: ${level}`);
     setTimeout(() => {
-        alert(`${level} 방으로 이동합니다! (기능 준비 중)`);
-        setIsLoading(false);
-    }, 1000);
+      alert(`🎉 환영합니다! [${email}] 계정으로 30 크레딧이 충전되었습니다. 우리 아이의 첫 작문을 시작해볼까요?`);
+      setIsLoading(false);
+    }, 1500);
   };
 
   return (
@@ -38,82 +32,83 @@ function App() {
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: '20px',
-      margin: 0
+      padding: '20px'
     }}>
-      
       <div style={{
         backgroundColor: 'white',
         padding: '50px 30px',
-        borderRadius: '40px',
-        boxShadow: '0 15px 40px rgba(232, 67, 147, 0.2)',
-        border: '8px solid #ffcce0',
-        maxWidth: '500px',
+        borderRadius: '30px',
+        boxShadow: '0 20px 50px rgba(255, 107, 129, 0.15)',
+        borderTop: `10px solid ${colors.primary}`,
+        maxWidth: '450px',
         width: '100%',
-        textAlign: 'center',
-        boxSizing: 'border-box'
+        textAlign: 'center'
       }}>
-        
-        <div style={{ fontSize: '80px', marginBottom: '10px' }}>🐰</div>
-        <h1 style={{ color: colors.primary, fontSize: '36px', fontWeight: '900', margin: '0 0 20px 0' }}>
+        <div style={{ fontSize: '70px', marginBottom: '5px', animation: 'bounce 2s infinite' }}>🐰</div>
+        <h2 style={{ color: colors.primary, fontSize: '28px', fontWeight: '900', margin: '0 0 10px 0', letterSpacing: '-1px' }}>
           Miss Rabbit's Class
-        </h1>
-        
-        <p style={{ color: '#636e72', fontSize: '18px', fontWeight: '700', marginBottom: '30px' }}>
-          재미있는 영어 작문 시간!<br/>이메일을 적고 레벨을 선택해봐요.
+        </h2>
+        <p style={{ color: '#747d8c', fontSize: '15px', fontWeight: 'bold', marginBottom: '25px' }}>
+          엄마표 영어의 완성, 우리 아이 전담 AI 튜터
         </p>
+
+        <div style={{
+          backgroundColor: '#fffcf2',
+          border: `2px dashed ${colors.accent}`,
+          borderRadius: '20px',
+          padding: '25px 15px',
+          marginBottom: '30px'
+        }}>
+          <h3 style={{ margin: '0 0 10px 0', color: colors.accent, fontSize: '22px', fontWeight: '900' }}>
+            🎁 첫 가입 특별 혜택!
+          </h3>
+          <p style={{ margin: 0, color: colors.text, fontSize: '17px', lineHeight: '1.5', fontWeight: '700' }}>
+            지금 이메일만 등록하시면<br/>
+            우리아이를 위한 <span style={{color: '#ff4757', fontSize: '22px', fontWeight: '900'}}>30 크레딧</span>을<br/>
+            즉시 무료로 드립니다!
+          </p>
+        </div>
 
         <input
           type="email"
-          placeholder="이메일 입력 (ex: rabbit@mail.com)"
+          placeholder="엄마의 이메일을 적어주세요 (@)"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           style={{
-            width: '80%',
-            padding: '15px',
-            borderRadius: '30px',
-            border: '3px solid #b2bec3',
-            fontSize: '18px',
+            width: '100%',
+            padding: '18px',
+            borderRadius: '15px',
+            border: '2px solid #dfe4ea',
+            fontSize: '16px',
             textAlign: 'center',
-            marginBottom: '30px',
+            marginBottom: '20px',
             outline: 'none',
-            boxSizing: 'border-box'
+            boxSizing: 'border-box',
+            fontWeight: 'bold'
           }}
         />
 
-        {isLoading ? (
-          <div style={{ fontSize: '24px', color: colors.primary, fontWeight: 'bold' }}>
-            🐰 Rabbit 선생님이 준비 중이에요...
-          </div>
-        ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-            <button onClick={() => handleLevelSelect('Lv.1 Sprout')} style={{...btnStyle, backgroundColor: colors.lv1}}>
-              🌱 Lv.1 Sprout
-            </button>
-            <button onClick={() => handleLevelSelect('Lv.2 Tree')} style={{...btnStyle, backgroundColor: colors.lv2}}>
-              🌿 Lv.2 Tree
-            </button>
-            <button onClick={() => handleLevelSelect('Lv.3 Forest')} style={{...btnStyle, backgroundColor: colors.lv3}}>
-              🌳 Lv.3 Forest
-            </button>
-          </div>
-        )}
+        <button onClick={handleJoin} disabled={isLoading} style={{
+          width: '100%',
+          backgroundColor: isLoading ? '#ced6e0' : colors.primary,
+          color: 'white',
+          border: 'none',
+          padding: '20px',
+          borderRadius: '15px',
+          fontSize: '20px',
+          fontWeight: '900',
+          cursor: isLoading ? 'wait' : 'pointer',
+          boxShadow: isLoading ? 'none' : '0 10px 20px rgba(255, 107, 129, 0.3)'
+        }}>
+          {isLoading ? '🐰 토끼 선생님 부르는 중...' : '🚀 30크레딧 받고 시작하기'}
+        </button>
       </div>
+      <style>{`
+        @keyframes bounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
+      `}</style>
     </div>
   );
 }
-
-// 공통 버튼 스타일
-const btnStyle = {
-  padding: '20px',
-  border: 'none',
-  borderRadius: '40px',
-  fontSize: '22px',
-  fontWeight: '900',
-  color: 'white',
-  cursor: 'pointer',
-  boxShadow: '0 6px 0 rgba(0,0,0,0.1)',
-  transition: 'transform 0.1s',
-};
-
-export default App;
