@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
-export default function App() { // 이름을 App으로 통일했습니다!
+export default function App() {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const colors = {
-    primary: '#ff6b81', 
+    primary: '#ff6b81', // 세련된 코랄 핑크 (엄마 타겟)
     background: '#fff0f6',
-    accent: '#ffa502', 
+    accent: '#ffa502', // 30점 강조 오렌지
     text: '#2f3542'
   };
 
@@ -16,10 +16,13 @@ export default function App() { // 이름을 App으로 통일했습니다!
       alert('어머니, 혜택을 받으실 정확한 이메일 주소를 입력해주세요! 🐰');
       return;
     }
+    
     setIsLoading(true);
+    // 30점 충전 로직 (나중에 GAS 연동 예정)
     setTimeout(() => {
       alert(`🎉 환영합니다! [${email}] 계정으로 30 크레딧이 충전되었습니다. 우리 아이의 첫 작문을 시작해볼까요?`);
       setIsLoading(false);
+      // 여기서 다음 작문 화면으로 넘어가게 될 겁니다!
     }, 1500);
   };
 
@@ -34,6 +37,7 @@ export default function App() { // 이름을 App으로 통일했습니다!
       justifyContent: 'center',
       padding: '20px'
     }}>
+      
       <div style={{
         backgroundColor: 'white',
         padding: '50px 30px',
@@ -44,7 +48,9 @@ export default function App() { // 이름을 App으로 통일했습니다!
         width: '100%',
         textAlign: 'center'
       }}>
+        
         <div style={{ fontSize: '70px', marginBottom: '5px', animation: 'bounce 2s infinite' }}>🐰</div>
+        
         <h2 style={{ color: colors.primary, fontSize: '28px', fontWeight: '900', margin: '0 0 10px 0', letterSpacing: '-1px' }}>
           Miss Rabbit's Class
         </h2>
@@ -52,6 +58,7 @@ export default function App() { // 이름을 App으로 통일했습니다!
           엄마표 영어의 완성, 우리 아이 전담 AI 튜터
         </p>
 
+        {/* 🎁 강력한 혜택 배너 (이게 핵심!) */}
         <div style={{
           backgroundColor: '#fffcf2',
           border: `2px dashed ${colors.accent}`,
@@ -64,8 +71,8 @@ export default function App() { // 이름을 App으로 통일했습니다!
           </h3>
           <p style={{ margin: 0, color: colors.text, fontSize: '17px', lineHeight: '1.5', fontWeight: '700' }}>
             지금 이메일만 등록하시면<br/>
-            우리아이를 위한 <span style={{color: '#ff4757', fontSize: '22px', fontWeight: '900'}}>30 크레딧</span>을<br/>
-            즉시 무료로 드립니다!
+            우리아이를 위한 <span style={{color: '#ff4757', fontSize: '24px', fontWeight: '950'}}>30 크레딧</span>을<br/>
+            즉시 무료로 드립니다! ✨
           </p>
         </div>
 
@@ -88,20 +95,26 @@ export default function App() { // 이름을 App으로 통일했습니다!
           }}
         />
 
-        <button onClick={handleJoin} disabled={isLoading} style={{
-          width: '100%',
-          backgroundColor: isLoading ? '#ced6e0' : colors.primary,
-          color: 'white',
-          border: 'none',
-          padding: '20px',
-          borderRadius: '15px',
-          fontSize: '20px',
-          fontWeight: '900',
-          cursor: isLoading ? 'wait' : 'pointer',
-          boxShadow: isLoading ? 'none' : '0 10px 20px rgba(255, 107, 129, 0.3)'
-        }}>
+        <button 
+          onClick={handleJoin} 
+          disabled={isLoading}
+          style={{
+            width: '100%',
+            backgroundColor: isLoading ? '#ced6e0' : colors.primary,
+            color: 'white',
+            border: 'none',
+            padding: '20px',
+            borderRadius: '15px',
+            fontSize: '20px',
+            fontWeight: '900',
+            cursor: isLoading ? 'wait' : 'pointer',
+            boxShadow: isLoading ? 'none' : '0 10px 20px rgba(255, 107, 129, 0.3)',
+            transition: 'all 0.2s',
+          }}
+        >
           {isLoading ? '🐰 토끼 선생님 부르는 중...' : '🚀 30크레딧 받고 시작하기'}
         </button>
+
       </div>
       <style>{`
         @keyframes bounce {
