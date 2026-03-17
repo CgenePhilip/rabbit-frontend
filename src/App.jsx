@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
+import RabbitPlayer from './RabbitPlayer'; // 🐰 창고에서 토끼 부품을 가져옵니다!
 
 export default function App() {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isJoined, setIsJoined] = useState(false); // 가입 성공 여부 체크
 
   const colors = {
-    primary: '#ff6b81', // 세련된 코랄 핑크 (엄마 타겟)
+    primary: '#ff6b81', 
     background: '#fff0f6',
-    accent: '#ffa502', // 30점 강조 오렌지
+    accent: '#ffa502', 
     text: '#2f3542'
   };
 
@@ -18,11 +20,10 @@ export default function App() {
     }
     
     setIsLoading(true);
-    // 30점 충전 로직 (나중에 GAS 연동 예정)
+    // 가상 가입 로직 (나중에 GAS 연동)
     setTimeout(() => {
-      alert(`🎉 환영합니다! [${email}] 계정으로 30 크레딧이 충전되었습니다. 우리 아이의 첫 작문을 시작해볼까요?`);
+      setIsJoined(true); // 가입 성공 상태로 변경!
       setIsLoading(false);
-      // 여기서 다음 작문 화면으로 넘어가게 될 겁니다!
     }, 1500);
   };
 
@@ -38,90 +39,47 @@ export default function App() {
       padding: '20px'
     }}>
       
-      <div style={{
-        backgroundColor: 'white',
-        padding: '50px 30px',
-        borderRadius: '30px',
-        boxShadow: '0 20px 50px rgba(255, 107, 129, 0.15)',
-        borderTop: `10px solid ${colors.primary}`,
-        maxWidth: '450px',
-        width: '100%',
-        textAlign: 'center'
-      }}>
-        
-        <div style={{ fontSize: '70px', marginBottom: '5px', animation: 'bounce 2s infinite' }}>🐰</div>
-        
-        <h2 style={{ color: colors.primary, fontSize: '28px', fontWeight: '900', margin: '0 0 10px 0', letterSpacing: '-1px' }}>
-          Miss Rabbit's Class
-        </h2>
-        <p style={{ color: '#747d8c', fontSize: '15px', fontWeight: 'bold', marginBottom: '25px' }}>
-          엄마표 영어의 완성, 우리 아이 전담 AI 튜터
-        </p>
-
-        {/* 🎁 강력한 혜택 배너 (이게 핵심!) */}
+      {!isJoined ? (
+        // 1️⃣ 아직 가입 전이면 '대문' 화면을 보여줍니다.
         <div style={{
-          backgroundColor: '#fffcf2',
-          border: `2px dashed ${colors.accent}`,
-          borderRadius: '20px',
-          padding: '25px 15px',
-          marginBottom: '30px'
+          backgroundColor: 'white', padding: '50px 30px', borderRadius: '30px',
+          boxShadow: '0 20px 50px rgba(255, 107, 129, 0.15)',
+          borderTop: `10px solid ${colors.primary}`, maxWidth: '450px', width: '100%', textAlign: 'center'
         }}>
-          <h3 style={{ margin: '0 0 10px 0', color: colors.accent, fontSize: '22px', fontWeight: '900' }}>
-            🎁 첫 가입 특별 혜택!
-          </h3>
-          <p style={{ margin: 0, color: colors.text, fontSize: '17px', lineHeight: '1.5', fontWeight: '700' }}>
-            지금 이메일만 등록하시면<br/>
-            우리아이를 위한 <span style={{color: '#ff4757', fontSize: '24px', fontWeight: '950'}}>30 크레딧</span>을<br/>
-            즉시 무료로 드립니다! ✨
-          </p>
+          <div style={{ fontSize: '70px', marginBottom: '5px' }}>🐰</div>
+          <h2 style={{ color: colors.primary, fontSize: '28px', fontWeight: '900', margin: '0 0 10px 0' }}>Miss Rabbit's Class</h2>
+          <p style={{ color: '#747d8c', fontSize: '15px', fontWeight: 'bold', marginBottom: '25px' }}>엄마표 영어의 완성, AI 튜터</p>
+
+          <div style={{ backgroundColor: '#fffcf2', border: `2px dashed ${colors.accent}`, borderRadius: '20px', padding: '25px 15px', marginBottom: '30px' }}>
+            <h3 style={{ margin: '0 0 10px 0', color: colors.accent, fontSize: '22px', fontWeight: '900' }}>🎁 첫 가입 혜택!</h3>
+            <p style={{ margin: 0, color: colors.text, fontSize: '17px', fontWeight: '700' }}>30 크레딧 즉시 무료 지급! ✨</p>
+          </div>
+
+          <input
+            type="email" placeholder="엄마의 이메일을 적어주세요" value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            style={{ width: '100%', padding: '18px', borderRadius: '15px', border: '2px solid #dfe4ea', fontSize: '16px', textAlign: 'center', marginBottom: '20px' }}
+          />
+
+          <button onClick={handleJoin} disabled={isLoading} style={{
+            width: '100%', backgroundColor: isLoading ? '#ced6e0' : colors.primary, color: 'white', border: 'none', padding: '20px', borderRadius: '15px', fontSize: '20px', fontWeight: '900', cursor: 'pointer'
+          }}>
+            {isLoading ? '🐰 선생님 부르는 중...' : '🚀 30크레딧 받고 시작하기'}
+          </button>
         </div>
-
-        <input
-          type="email"
-          placeholder="엄마의 이메일을 적어주세요 (@)"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          style={{
-            width: '100%',
-            padding: '18px',
-            borderRadius: '15px',
-            border: '2px solid #dfe4ea',
-            fontSize: '16px',
-            textAlign: 'center',
-            marginBottom: '20px',
-            outline: 'none',
-            boxSizing: 'border-box',
-            fontWeight: 'bold'
-          }}
-        />
-
-        <button 
-          onClick={handleJoin} 
-          disabled={isLoading}
-          style={{
-            width: '100%',
-            backgroundColor: isLoading ? '#ced6e0' : colors.primary,
-            color: 'white',
-            border: 'none',
-            padding: '20px',
-            borderRadius: '15px',
-            fontSize: '20px',
-            fontWeight: '900',
-            cursor: isLoading ? 'wait' : 'pointer',
-            boxShadow: isLoading ? 'none' : '0 10px 20px rgba(255, 107, 129, 0.3)',
-            transition: 'all 0.2s',
-          }}
-        >
-          {isLoading ? '🐰 토끼 선생님 부르는 중...' : '🚀 30크레딧 받고 시작하기'}
-        </button>
-
-      </div>
-      <style>{`
-        @keyframes bounce {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-10px); }
-        }
-      `}</style>
+      ) : (
+        // 2️⃣ 가입 버튼을 누르면 '토끼 플레이어' 화면이 짠! 나타납니다.
+        <div style={{ textAlign: 'center' }}>
+          <h2 style={{ color: colors.primary, marginBottom: '20px' }}>반가워요! 우리 아이 첫 공부 시작! 🌟</h2>
+          <RabbitPlayer 
+            sentenceText="Hello! Welcome to Miss Rabbit's Class. Let's start our first writing!"
+            audioUrl="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" // 실제론 TTS mp3 주소가 들어갈 자리!
+          />
+          <button onClick={() => setIsJoined(false)} style={{ marginTop: '20px', background: 'none', border: 'none', color: '#636e72', textDecoration: 'underline', cursor: 'pointer' }}>
+            처음으로 돌아가기
+          </button>
+        </div>
+      )}
     </div>
   );
 }
