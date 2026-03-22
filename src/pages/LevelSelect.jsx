@@ -18,10 +18,18 @@ function LevelSelect() {
     speakMsg(greetingText);
   }, [userEmail, userCredits, isNew, navigate]);
 
-  const speakMsg = (text) => {
+  // 🐰 [수정 1] 언어(lang)를 선택할 수 있도록 업그레이드! (기본값은 한국어)
+  const speakMsg = (text, lang = 'ko-KR') => {
     window.speechSynthesis.cancel(); 
     const speech = new SpeechSynthesisUtterance(text);
-    speech.lang = 'ko-KR';
+    speech.lang = lang; 
+    
+    // 영어일 때 래빗 선생님처럼 약간 더 다정하고 또박또박하게 세팅 (선택사항)
+    if(lang === 'en-US') {
+      speech.rate = 0.9;
+      speech.pitch = 1.2;
+    }
+
     speech.onstart = () => setIsSpeaking(true);
     speech.onend = () => setIsSpeaking(false);
     window.speechSynthesis.speak(speech);
@@ -34,7 +42,10 @@ function LevelSelect() {
       return;
     }
     
-    speakMsg(`좋아요! ${level} 레벨로 이동합니다!`);
+    // 🐰 [수정 2] 'Lv.1 Sprout'에서 'Sprout'만 쏙 뽑아내어 영어로 환영 인사!
+    const cleanLevelName = level.split(' ')[1]; // 띄어쓰기 기준으로 뒤의 단어만 추출
+    speakMsg(`Welcome to the ${cleanLevelName} level!`, 'en-US'); // 원어민 발음 발사!
+    
     setTimeout(() => {
       navigate('/write', { state: { email: userEmail, level: level, cost: cost } });
     }, 1500);

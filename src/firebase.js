@@ -1,14 +1,14 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
-// 1. Firebase 환경 설정 (6개 변수)
+// 1. Firebase 환경 설정 (직접 입력 방식 - .env 에러 완벽 차단!)
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID
+  apiKey: "AIzaSyD3DU9iloOCfWt8J4zCFr7fxWhdYV5Wg4",
+  authDomain: "rabbit-kids-english.firebaseapp.com",
+  projectId: "rabbit-kids-english",
+  storageBucket: "rabbit-kids-english.firebasestorage.app",
+  messagingSenderId: "809325389200",
+  appId: "1:809325389200:web:e0e96017b37b98f48dff15"
 };
 
 // 초기화
